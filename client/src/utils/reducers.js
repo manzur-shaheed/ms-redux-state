@@ -1,4 +1,3 @@
-import { useReducer } from 'react';
 import {
   UPDATE_PRODUCTS,
   ADD_TO_CART,
@@ -11,11 +10,16 @@ import {
   TOGGLE_CART,
 } from './actions';
 
-// TODO: To get a better understand of how a reducer works - add comments to the various actions in the reducer
+const initialState = {
+  products: [],
+  cart: [],
+  cartOpen: false,
+  categories: [],
+  currentCategory: ''
+}
 // [MS] a reducer changes the current state of the app depending on the action 
-export const reducer = (state, action) => {
+export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    // TODO: Add a comment describing the functionality of the UPDATE_PRODUCTS case
     // [MS] returns state with updated product array
     case UPDATE_PRODUCTS:
       return {
@@ -35,7 +39,6 @@ export const reducer = (state, action) => {
         ...state,
         cart: [...state.cart, ...action.products],
       };
-    // TODO: Add a comment describing the functionality of the UPDATE_CART_QUANTITY case
     // [MS] returns state with updated cart quantity if product id matches in action payload
     case UPDATE_CART_QUANTITY:
       return {
@@ -49,7 +52,6 @@ export const reducer = (state, action) => {
         }),
       };
 
-    // TODO: Add a comment describing the functionality of the REMOVE_FROM_CART case
     // [MS] create a new state of cart where we remove product that matches with product IDs in
     // action payload and return that new state and show cart only if there are items in 
     // the cart's new state
@@ -89,13 +91,11 @@ export const reducer = (state, action) => {
         currentCategory: action.currentCategory,
       };
 
-    // TODO: Add a comment describing what the default case is for
     // [MS] No action (there is no change in state, so return current state)
     default:
       return state;
   }
 };
 
-export function useProductReducer(initialState) {
-  return useReducer(reducer, initialState);
-}
+export default reducer;
+
